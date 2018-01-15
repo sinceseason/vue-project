@@ -1,0 +1,149 @@
+//font style
+$system_font_family_1: "Microsoft YaHei";//微软雅黑
+$system_font_family_2: "SimHei";//黑体
+
+//color
+$iconBtnColor: #268de9;
+$header_background_color: #268de9;
+$login_loginComponent_background_color: #ffffff;
+$login_line_color: #195AAE;
+$login_title_background_color: #ffffff;
+$login_title_div_color: #195AAE;
+$login_bottom_content_background_color: #0071c5;
+$login_login_background_color: #ffffff;
+$login_login_login_title: #0071c5;
+$login_login_subheading: #c3c5c6;
+$login_login_form_border_color: #bac7d2;
+$login_login_rememberpwd_color: #c3c5c6;
+$login_login_button_background_color: #4c88f1;
+$login_login_button_color: #ffffff;
+$login_login_version_color: #c3c5c6;
+
+$page_container_background_color: #F1F5F8;
+$page_container_left_background_color: #FFFFFF;
+$page_container_left_hover_background_color: #00BFFF;
+$page_container_left_active_background_color: #3b77e5;
+$page_container_left_border_color: #D8DFE5;
+$page_container_right_border_color: #D8DFE5;
+$page_container_right_content_background_color: #FFFFFF;
+$page_container_right_content_border_color: #D8DFE5;
+$page_container_right_title_border_color: #D8DFE5;
+$page_container_right_bar_border_color: #D8DFE5;
+$page_container_input_border_color: #D8DFE5;
+$page_container_right_bar_label_border_color: #000000;
+$page_container_right_bar_label_color: #000000;
+$page_container_right_bar_button_background_color: #00A7F5;
+$page_container_right_bar_button_background_color_selected: #3B77E5;
+$page_container_right_bar_button_color: #ffffff;
+
+$index_view_detail_background_color: #2A85D5;
+$index_view_detail_panel_color: #ffffff;
+$index_detail_scroll_background_color: #44E040;
+$index_detail_button_color: #797979;
+$index_detail_button_color_hover: #ffffff;
+$index_detail_button_background_color: #ffffff;
+$index_detail_button_background_color_hover: #44E040;
+$monitor_list_background_color: #3d3d3f;
+$monitor_list_from_border_color: transparent;
+$monitor_list_from_button: #ffffff;
+$monitor_list_from_button_background_color: #516983;
+$monitor_list_from_online_background_color: #f9dc5a;
+$monitor_list_from_index_border_color: #3ce034;
+$monitor_list_from_button_color: #ffdf00;
+$monitor_list_border_color: #a4a4a4;
+$monitor_infowindow_shoadow: #78C6CC;
+$monitor_infowindow_button_color: #ffffff;
+$monitor_infowindow_content_color: #0DB39F;
+$monitor_infowindow_online_state_color: #30bfe9;
+$monitor_infowindos_take_order_color: #6ec72f;
+$monitor_infowindow_disable_color: #0DB39F;
+
+$inspection_tab_selected_color: #268de9;
+$inspection_tab_btn_text_color: #7e8c8c;
+$inspection_option_title_color: #258EEA;
+
+$btn_disable:#b5b5b5;
+$btn_bgcolor1: #00a7f5;
+$btn_bgcolor2: #6ec833;
+$btn_bgcolor3: #ff5b64;
+$btn_bgcolor4: #FFC800;
+$btn_bgcolor5: #20c695;
+$btn_bgcolor6: #a4a4a4;
+$btn_color: #ffffff;
+
+//method
+@mixin site_name_style{
+  color: #fff;
+  font-family: $system_font_family_1;
+  font-size: 30px;
+  padding-top: 10px;
+}
+@mixin menu_item_style{
+  color: #ffffff;
+  width: 100px;
+  height: 100%;
+  line-height: 36px;
+  float: left;
+  text-align: center;
+  cursor: pointer;
+  font-family: $system_font_family_2;
+  font-size: 16px;
+
+  &:hover{
+    background-color: #066db3;
+  }
+
+  &.menu_item_selected{
+    color: #000000;
+    background-color: #ffffff;
+    border-bottom: 2px solid #f9e43b;
+  }
+}
+
+@mixin monitor_view_type {
+  position: fixed;
+  left: 10px;
+  bottom: 50px;
+  z-index: 999;
+  width: 90px;
+  height: 80px;
+  border: 1px solid #0d0408;
+  background-color: rgba(#21262d, 0.8);
+
+  .item{
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    font-family: $system_font_family_1;
+    font-size: 18px;
+    color: white;
+    border-bottom: 1px solid #0d0408;
+    cursor: pointer;
+
+    &:hover, &.active{
+      background-color: #0071c5;
+      color: #b5b5b5;
+    }
+
+    &:last-child{
+      border-bottom: 0;
+    }
+  }
+}
+
+//animate
+@mixin keyframes($name) {
+  @-webkit-keyframes #{$name} {
+    @content;
+  }
+  @-moz-keyframes #{$name} {
+    @content;
+  }
+  @-ms-keyframes #{$name} {
+    @content;
+  }
+  @keyframes #{$name} {
+    @content;
+  }
+}
