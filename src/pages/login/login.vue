@@ -55,11 +55,13 @@
 </template>
 
 <script>
+import { VERSION, LOGIN } from '@/config/const'
+
 export default {
   name: 'login',
   data () {
     return {
-			version: '1.0.0',
+			version: VERSION,
 			reqUser: {
 				username: '',
 				password: ''
