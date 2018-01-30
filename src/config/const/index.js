@@ -10,6 +10,14 @@ export const SUBSCRIBE_URL = 'ws://' + apiIp + ':61614'
 // http
 export const LOGIN = 'login'
 
+// login
+export const loginError = {
+    type: 'error',
+    title: '',
+    message: '用户名或密码不能为空',
+    duration: 2000
+}
+
 // notify
 export const basicSuccessNofity = {
     type: 'success',

@@ -35,16 +35,16 @@
               <div class="login-button">
                 <a @click="login">{{$t('label.login')}}</a>
               </div>
-              <div class="link">
+              <!-- <div class="link">
                 <div>
                   <a @click="joinTrust">{{$t('label.join_trust')}}</a>
                 </div>
                 <div>
                   <a @click="download">{{$t('label.download_center')}}</a>
                 </div>
-              </div>
+              </div> -->
               <div class="version">
-                <div>Ver {{version}}</div>
+                <div>{{version}}</div>
               </div>
             </div>
           </div>
@@ -55,7 +55,7 @@
 </template>
 
 <script>
-import { VERSION, LOGIN } from '@/config/const'
+import { VERSION, LOGIN, loginError } from '@/config/const'
 
 export default {
   name: 'login',
@@ -72,8 +72,17 @@ export default {
     }
   },
 	methods: {
-		login() {
-			
+		login () {
+			if (this.reqUser.username == '' || this.reqUser.password == '') {
+				this.showBasicNotify(loginError)
+				return
+			}
+			let jsonStr = JSON.stringify(this.reqUser)
+			let reqJson = this.encode(jsonStr)
+			this.$httpPost(LOGIN, reqJson)
+				.then(data => {
+					console.log(data)
+				})
 		}
 	}
 }
@@ -277,23 +286,23 @@ export default {
 	                color: $login_login_button_color;
 	              }
 	            }
-	            .link{
-	              position: relative;
-	              top: 65px;
-	              width: 100%;
-	              font-size: 15px;
+	            // .link{
+	            //   position: relative;
+	            //   top: 65px;
+	            //   width: 100%;
+	            //   font-size: 15px;
 	
-	              a:hover{
-	                cursor: pointer;
-	              }
+	            //   a:hover{
+	            //     cursor: pointer;
+	            //   }
 	
-	              div:first-child{
-	                float: left;
-	              }
-	              div:last-child{
-	                float: right;
-	              }
-	            }
+	            //   div:first-child{
+	            //     float: left;
+	            //   }
+	            //   div:last-child{
+	            //     float: right;
+	            //   }
+	            // }
 	            .version{
 	              position: relative;
 	              top: 95px;
