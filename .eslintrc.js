@@ -23,9 +23,15 @@ module.exports = {
     'generator-star-spacing': 0,
     // allow debugger during development
     'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
-    //no-tabs
+    // no-tabs
     'no-tabs': 'off',
-    //允许使用tab缩进
-    'indent': 0
+    // 允许使用tab缩进
+    'indent': 0,
+    // if 后跟 {}
+    'curly': 'off',
+    // 禁止混用tab和空格
+    "no-mixed-spaces-and-tabs": 'off',
+    // 文件以单一的换行符结束
+    'eol-last': 'off'
   }
 }

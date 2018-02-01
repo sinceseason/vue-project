@@ -7,14 +7,27 @@ const apiPort = '8081'
 export const BASE_URL = 'http://' + apiIp + ':' + apiPort + '/api/'
 export const SUBSCRIBE_URL = 'ws://' + apiIp + ':61614'
 
-// http
+// httpUrl
 export const LOGIN = 'login'
 
+// result
+export const RESULT = {
+    success: 'SUCCESS',
+    failed: 'FAILED'
+}
+
 // login
-export const loginError = {
+export const loginEmpty = {
     type: 'error',
     title: '',
     message: '用户名或密码不能为空',
+    duration: 2000
+}
+
+export const networkError = {
+    type: 'error',
+    title: '',
+    message: '网络错误',
     duration: 2000
 }
 
@@ -36,5 +49,3 @@ export const basicFailNofity = {
 // messagebox
 // export const basicMessageBox = {
 // }
-
-// export {BASE_URL, SUBSCRIBE_URL}

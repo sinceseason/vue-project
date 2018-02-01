@@ -5,7 +5,12 @@ import App from './App'
 import router from './router'
 import VueI18n from 'vue-i18n'
 import ElementUI from 'element-ui'
+
 import Util from './config/util'
+import * as Filters from './config/filters'
+import Http from './config/http'
+import store from './store'
+
 import '../node_modules/element-ui/lib/theme-chalk/index.css'
 import '../node_modules/bootstrap/dist/js/bootstrap.min.js'
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
@@ -15,6 +20,11 @@ Vue.config.productionTip = false
 
 Vue.use(ElementUI)
 Vue.use(Util)
+Vue.use(Http)
+
+Object.keys(Filters).forEach(key => {
+  Vue.filter(key, Filters[key])
+})
 
 Vue.use(VueI18n)
 const i18n = new VueI18n({
@@ -30,6 +40,7 @@ new Vue({
   el: '#app',
   router,
   i18n,
+  store,
   template: '<App/>',
   components: { App }
 })

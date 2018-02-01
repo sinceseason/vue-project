@@ -4,7 +4,8 @@
       <div class="top-content">
         <div class="line"></div>
         <div class="title">
-          <div>{{$t(loginPlatform | platformNameFilter)}}</div>
+          <!-- <div>{{ $t(loginPlatform | platformNameFilter) }}</div>		错误的写法 -->
+					<div>{{$t('label.title')}}</div>
         </div>
       </div>
       <div class="bottom-content">
@@ -21,13 +22,13 @@
                 <div>
                   <i class="fa fa-user"></i>
                 </div>
-                <input type="text" :placeholder="用户名" v-model="reqUser.username" />
+                <input type="text" placeholder="用户名" v-model="reqUser.username" />
               </div>
               <div class="login-password">
                 <div>
                   <i class="fa fa-lock"></i>
                 </div>
-                <input type="password" :placeholder="密码" v-model="reqUser.password" />
+                <input type="password" placeholder="密码" v-model="reqUser.password" />
               </div>
               <div class="login-rememberpwd">
                 <input type="checkbox" v-model="cacheAccount.cached" />{{$t('label.remember_account')}}
@@ -55,13 +56,14 @@
 </template>
 
 <script>
-import { VERSION, LOGIN, loginError } from '@/config/const'
+import { VERSION, LOGIN, loginEmpty, networkError, RESULT } from '@/config/const'
 
 export default {
   name: 'login',
   data () {
     return {
 			version: VERSION,
+			loginPlatform: '',
 			reqUser: {
 				username: '',
 				password: ''
@@ -73,15 +75,34 @@ export default {
   },
 	methods: {
 		login () {
-			if (this.reqUser.username == '' || this.reqUser.password == '') {
-				this.showBasicNotify(loginError)
+			if (this.reqUser.username === '' || this.reqUser.password === '') {
+				this.showBasicNotify(loginEmpty)
 				return
 			}
 			let jsonStr = JSON.stringify(this.reqUser)
 			let reqJson = this.encode(jsonStr)
-			this.$httpPost(LOGIN, reqJson)
+			this.$httpPost(LOGIN, {para: reqJson})
 				.then(data => {
-					console.log(data)
+					let result = data.data
+          if (!result.result) {
+            this.showBasicNotify(networkError)
+          } else if (result.result === RESULT.success) {
+						let dataJson = this.decode(result.data)
+						let loginedUser = JSON.parse(dataJson)
+						this.$store.dispatch('login', loginedUser)
+					} else {
+						let errMessage = ''
+            if (result.decodeData === 'out of date')
+							errMessage = this.$t('message.out_of_date')
+            else
+							errMessage = this.$t('message.failed_accout')
+            this.$notify({
+              type: 'error',
+              title: '',
+							message: errMessage,
+							duraction: 2000
+            })
+          }
 				})
 		}
 	}
@@ -209,7 +230,7 @@ export default {
 	              height: 46px;
 	
 	              div{
-	                color:$login_login_form_border_color;
+	                color: $login_login_form_border_color;
 	                font-size: 22px;
 	                float: left;
 	                line-height: 46px;
@@ -234,7 +255,7 @@ export default {
 	              height: 46px;
 	
 	              div{
-	                color:$login_login_form_border_color;
+	                color: $login_login_form_border_color;
 	                font-size: 22px;
 	                float: left;
 	                line-height: 46px;

@@ -1,8 +1,8 @@
 import axios from 'axios'
-import {BASE_URL as baseUrl} from '../const'
+import {BASE_URL} from '../const'
 
 let config = {
-  baseUrl : baseUrl
+  baseURL: BASE_URL
 }
 
 const instance = axios.create(config)
@@ -14,7 +14,7 @@ class Http {
   }
 
   static _get (url, params) {
-    return new Promise ((resolve, reject) => {
+    return new Promise((resolve, reject) => {
       instance.get(url, {
         params: params
       }).then((data) => {
@@ -27,8 +27,16 @@ class Http {
 
   static _post (url, params) {
     return new Promise((resolve, reject) => {
-      instance.post(url, params)
-      .then((data) => {
+      instance.post(url, params, {
+        headers: {'Content-Type': undefined},
+        transformRequest: [function (params, headers) {
+          let formData = new FormData()
+          for (let key of Object.keys(params)) {
+            formData.append(key, params[key] !== null ? params[key] : '')
+          }
+          return formData
+        }]
+      }).then((data) => {
         resolve(data)
       }).catch((error) => {
         reject(error)
@@ -36,3 +44,5 @@ class Http {
     })
   }
 }
+
+export default Http

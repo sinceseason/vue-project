@@ -8,7 +8,8 @@ const Login = () => import('@/pages/login/login')
 const router = new Router({
   mode: 'history',
   routes: [
-    {path: '/', name: 'login', component: Login}
+    { path: '/', name: 'login', component: Login },
+    { path: '/*', redirect: { name: 'login' } }
   ]
 })
 
