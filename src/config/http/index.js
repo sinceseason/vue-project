@@ -11,6 +11,7 @@ class Http {
   static install (Vue) {
     Vue.prototype.$httpGet = Http._get
     Vue.prototype.$httpPost = Http._post
+    Vue.prototype.$httpAll = Http._all
   }
 
   static _get (url, params) {
@@ -42,6 +43,13 @@ class Http {
         reject(error)
       })
     })
+  }
+
+  static _all (urls) {
+    axios.all(urls)
+    .then(axios.spread(function (acct, perms) {
+      console.log(acct, perms)
+    }))
   }
 }
 

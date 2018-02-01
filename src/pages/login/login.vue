@@ -56,7 +56,7 @@
 </template>
 
 <script>
-import { VERSION, LOGIN, loginEmpty, networkError, RESULT } from '@/config/const'
+import { VERSION, LOGIN, loginEmpty, networkError, RESULT, ROLE, DEPARTMENT } from '@/config/const'
 
 export default {
   name: 'login',
@@ -70,7 +70,8 @@ export default {
 			},
 			cacheAccount: {
 				cached: false
-			}
+			},
+			urls: []
     }
   },
 	methods: {
@@ -90,6 +91,12 @@ export default {
 						let dataJson = this.decode(result.data)
 						let loginedUser = JSON.parse(dataJson)
 						this.$store.dispatch('login', loginedUser)
+						this.$httpAll([
+							this.$httpPost(DEPARTMENT),
+							this.$httpPost(ROLE)
+						]).then(data => {
+							console.log(data)
+						})
 					} else {
 						let errMessage = ''
             if (result.decodeData === 'out of date')
