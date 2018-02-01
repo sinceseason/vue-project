@@ -22,7 +22,7 @@ export default {
         loginedUser: state => state.loginedUser,
         token: state => state.token
     },
-    mutions: {
+    mutations: {
         [LOGIN] (state, loginedUser) {
             state.logined = true
             state.loginedUser = loginedUser
