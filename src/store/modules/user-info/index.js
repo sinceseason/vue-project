@@ -14,7 +14,7 @@ function getStorageItem (item) {
 export default {
     state: {
         logined: USER_IS_LOGINED,
-        loginedUser: JSON.parse(getStorageItem(USER_LOGINED_INFO)),
+        loginedUser: getStorageItem(USER_LOGINED_INFO),
         token: getStorageItem(CONFIG_HEADERS_TOKEN)
     },
     getters: {
@@ -30,6 +30,7 @@ export default {
 
             sessionStorage.setItem(USER_LOGINED_INFO, state.loginedUser)
             sessionStorage.setItem(USER_LOGINED_ID, state.loginedUser.id)
+            sessionStorage.setItem(CONFIG_HEADERS_TOKEN, state.token)
         }
     },
     actions: {
