@@ -11,6 +11,8 @@ import * as Filters from './config/filters'
 import Http from './config/http'
 import store from './store'
 
+import global from './config/global'
+
 import '../node_modules/element-ui/lib/theme-chalk/index.css'
 import '../node_modules/bootstrap/dist/js/bootstrap.min.js'
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
@@ -25,6 +27,10 @@ Vue.use(Http)
 Object.keys(Filters).forEach(key => {
   Vue.filter(key, Filters[key])
 })
+
+for (let item of [global])
+  for (let key of Object.keys(item))
+    Vue.prototype[key] = item[key]
 
 Vue.use(VueI18n)
 const i18n = new VueI18n({

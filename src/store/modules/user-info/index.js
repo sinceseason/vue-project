@@ -3,7 +3,6 @@ import {
 } from '../../mutation_types'
 
 const USER_LOGINED_INFO = 'loginedUser'
-const USER_LOGINED_ID = 'loginedUserId'
 const CONFIG_HEADERS_TOKEN = 'token'
 const USER_IS_LOGINED = false
 
@@ -23,13 +22,12 @@ export default {
         token: state => state.token
     },
     mutations: {
-        [LOGIN] (state, loginedUser) {
+        [LOGIN] (state, userObj) {
             state.logined = true
-            state.loginedUser = loginedUser
-            state.token = loginedUser.id
+            state.loginedUser = userObj.loginedUser
+            state.token = userObj.reqToken
 
             sessionStorage.setItem(USER_LOGINED_INFO, state.loginedUser)
-            sessionStorage.setItem(USER_LOGINED_ID, state.loginedUser.id)
             sessionStorage.setItem(CONFIG_HEADERS_TOKEN, state.token)
         }
     },

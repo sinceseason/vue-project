@@ -56,13 +56,13 @@
 </template>
 
 <script>
-import { VERSION, LOGIN, loginEmpty, networkError, RESULT, ROLE, DEPARTMENT } from '@/config/const'
+import * as CONST from '@/config/const'
 
 export default {
   name: 'login',
   data () {
     return {
-			version: VERSION,
+			version: CONST.VERSION,
 			loginPlatform: '',
 			reqUser: {
 				username: '',
@@ -77,26 +77,25 @@ export default {
 	methods: {
 		login () {
 			if (this.reqUser.username === '' || this.reqUser.password === '') {
-				this.showBasicNotify(loginEmpty)
+				this.showBasicNotify(CONST.loginEmpty)
 				return
 			}
 			let jsonStr = JSON.stringify(this.reqUser)
 			let reqJson = this.encode(jsonStr)
-			this.$httpPost(LOGIN, {para: reqJson})
+			this.$httpPost(CONST.LOGIN, null, {para: reqJson})
 				.then(data => {
 					let result = data.data
           if (!result.result) {
-            this.showBasicNotify(networkError)
-          } else if (result.result === RESULT.success) {
+            this.showBasicNotify(CONST.networkError)
+          } else if (result.result === CONST.RESULT.success) {
 						let dataJson = this.decode(result.data)
 						let loginedUser = JSON.parse(dataJson)
-						this.$store.dispatch('login', loginedUser)
-						this.$httpAll([
-							this.$httpPost(DEPARTMENT),
-							this.$httpPost(ROLE)
-						]).then(data => {
-							console.log(data)
-						})
+						let userObj = {
+							loginedUser: loginedUser,
+							reqToken: result.decodeData
+						}
+						this.$store.dispatch('login', userObj)
+						this.$loadBasicData(loginedUser, true)
 					} else {
 						let errMessage = ''
             if (result.decodeData === 'out of date')
@@ -112,6 +111,45 @@ export default {
           }
 				})
 		}
+		// loadBasicData (loginedUser, fromLogin, toStateUrl) {
+		// 	let requireArr = [
+		// 		this.$httpPost(CONST.ROLE, loginedUser.roleId),
+		// 		this.$httpPost(CONST.MENU, 'client'),
+		// 		this.$httpPost(CONST.DEPARTMENT),
+		// 		this.$httpPost(CONST.ANALYSISDEVICE)
+		// 	]
+		// 	this.$httpAll(requireArr).then(data => {
+		// 		let i = 0
+		// 		for (let val of data) {
+		// 			let result = val.data
+		// 			if (result.result === CONST.RESULT.success && result.data) {
+		// 				let dataJson = this.decode(result.data)
+		// 				switch (i) {
+		// 					case 0:
+		// 						let authorizationList = JSON.parse(dataJson)
+    //           	if (authorizationList != null) {
+    //           	  this.$store.dispatch('auth', authorizationList)
+		// 						}
+		// 						break
+		// 					case 1:
+		// 						let menuList = JSON.parse(dataJson)
+		// 						this.$store.dispatch('menu', menuList)
+		// 						break
+		// 					case 2:
+		// 						let departmentList = JSON.parse(dataJson)
+		// 						this.$store.dispatch('department', departmentList)
+		// 						break
+		// 					default:
+		// 						break
+		// 				}
+		// 			}
+		// 			i++
+		// 		}
+		// 		if (fromLogin) {
+		// 			selectMenu($scope.menu[0], true)
+		// 		}
+		// 	})
+		// }
 	}
 }
 </script>
@@ -124,13 +162,15 @@ export default {
 	  padding: 0;
 	  margin: 0;
 	  width: 100%;
-	  height: 100%;
+		height: 100%;
+		
 	  .bg{
 	    position: fixed;
 	    top: 50%;
 	    margin-top: -320px;
 	    width: 100%;
-	    height: 640px;
+			height: 640px;
+			
 	    .top-content{
 	      bottom:0;
 	      width: 100%;
@@ -160,7 +200,8 @@ export default {
 	        color: $login_title_div_color;
 	        text-align: center;
 	      }
-	    }
+			}
+			
 	    .bottom-content{
 	      background-color: $login_bottom_content_background_color;
 	      text-align: center;
@@ -215,7 +256,8 @@ export default {
 	                font-size: 22px;
 	                line-height: 22px;
 	                color: $login_login_login_title;
-	              }
+								}
+								
 	              .login-subheading{
 	                float: left;
 	                margin-left: 10px;
@@ -228,7 +270,8 @@ export default {
 	                line-height: 18px;
 	                color: $login_login_subheading;
 	              }
-	            }
+							}
+							
 	            .login-name{
 	              position: relative;
 	              top: 15px;
@@ -243,7 +286,8 @@ export default {
 	                line-height: 46px;
 	                width: 42px;
 	                height: 46px;
-	              }
+								}
+								
 	              input{
 	                border: 0;
 	                width: 237px;
@@ -253,7 +297,8 @@ export default {
 	                line-height: 14px;
 	                color: $login_login_form_border_color;
 	              }
-	            }
+							}
+							
 	            .login-password{
 	              position: relative;
 	              top: 40px;
@@ -268,7 +313,8 @@ export default {
 	                line-height: 46px;
 	                width: 42px;
 	                height: 46px;
-	              }
+								}
+								
 	              input{
 	                border: 0;
 	                width: 237px;
@@ -278,7 +324,8 @@ export default {
 	                line-height: 14px;
 	                color: $login_login_form_border_color;
 	              }
-	            }
+							}
+							
 	            .login-rememberpwd{
 	              position: relative;
 	              top: 35px;
@@ -294,7 +341,8 @@ export default {
 	              input{
 	                margin: 0;
 	              }
-	            }
+							}
+							
 	            .login-button{
 	              position: relative;
 	              top: 40px;
@@ -348,7 +396,8 @@ export default {
 	              }
 	            }
 	          }
-	        }
+					}
+					
 	        @media (max-width: 1280px) {
 	          .login{
 	            right: 100px;

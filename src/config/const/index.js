@@ -2,8 +2,8 @@
 export const VERSION = 'ver 1.0.0'
 
 // url
-const apiIp = '112.35.63.188'
-// const apiIp = 'localhost'
+// const apiIp = '112.35.63.188'
+const apiIp = 'localhost'
 const apiPort = '8081'
 export const BASE_URL = 'http://' + apiIp + ':' + apiPort + '/api/'
 export const SUBSCRIBE_URL = 'ws://' + apiIp + ':61614'
@@ -12,6 +12,9 @@ export const SUBSCRIBE_URL = 'ws://' + apiIp + ':61614'
 export const LOGIN = 'login'
 export const ROLE = 'role'
 export const DEPARTMENT = 'department'
+export const MENU = 'menu'
+export const ANALYSISDEVICE = 'analysisDevice'
+export const OCX = 'ocx'
 
 // result
 export const RESULT = {

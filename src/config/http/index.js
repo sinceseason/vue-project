@@ -19,10 +19,12 @@ class Http {
 
   static bindHeadersToken (params) {
     let headersToken = store.getters.token
-    instance.defaults.headers.common['token'] = headersToken
+    headersToken && (instance.defaults.headers.common['token'] = headersToken)
   }
 
   static _get (url, params) {
+    Http.bindHeadersToken(params)
+
     return new Promise((resolve, reject) => {
       instance.get(url, {
         params: params
@@ -34,8 +36,11 @@ class Http {
     })
   }
 
-  static _post (url, params) {
+  static _post (url, urlPara, params) {
     Http.bindHeadersToken(params)
+
+    if (urlPara)
+      url += '/' + urlPara
 
     return new Promise((resolve, reject) => {
       instance.post(url, params, {
