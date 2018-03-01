@@ -26,7 +26,7 @@
 		name: 'navigator',
 		computed: {
 			selected () {
-				return this.$store.state.menuList
+				return this.$store.state.auth.menuList
 			}
 		}
 	}
