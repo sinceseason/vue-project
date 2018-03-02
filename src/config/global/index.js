@@ -62,9 +62,9 @@ function $selectMenu (menu, forceRedirect) {
                 for (let i of menu.subMenu.keys()) {
                     if (found)
                         break
-                    if ($isAuthorized(menu.subMenu[i].caption)) {
+                    if (this.$isAuthorized(menu.subMenu[i].caption)) {
                         for (let j = 0; j < menu.subMenu[i].subMenu.length; j++) {
-                            if ($isAuthorized(menu.subMenu[i].subMenu[j].main)) {
+                            if (this.$isAuthorized(menu.subMenu[i].subMenu[j].main)) {
                                 found = true
                                 this.$router.replace({name: menu.subMenu[i].subMenu[j].main})
                                 break

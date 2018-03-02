@@ -89,6 +89,7 @@ $btn_color: #ffffff;
   cursor: pointer;
   font-family: $system_font_family_2;
   font-size: 16px;
+  list-style: none;
 
   &:hover{
     background-color: #066db3;
@@ -96,7 +97,7 @@ $btn_color: #ffffff;
 
   &.menu_item_selected{
     color: #000000;
-    background-color: #ffffff;
+    background-color: #0263a5;
     border-bottom: 2px solid #f9e43b;
   }
 }

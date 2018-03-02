@@ -9,8 +9,26 @@
 				<div class="menu">
 					<div class="bar">
 						<li class="menu-item"
-
-						:class="{menu_item_selected: selected}"></li>
+							v-for="(menuItem, index) in menu" :key="index"
+							:class="{menu_item_selected: menuItem.selected}"
+							v-if="$isAuthorized(menuItem.main)">
+							<el-dropdown trigger="click" v-if="menuItem.showSubMenu">
+								<span class="el-dropdown-link">{{$t('menu.' + menuItem.caption)}}
+									<i class="el-icon-arrow-down el-icon-right"></i>
+								</span>
+								<el-dropdown-menu slot="dropdown">
+									<el-dropdown-item
+										v-for="subMenu in menuItem.subMenu" :key="subMenu.id"
+										v-if="$isAuthorized(subMenu.main)"
+										@click.native="$selectMenu(subMenu)">
+											{{$t('menu.' + subMenu.caption)}}
+									</el-dropdown-item>
+								</el-dropdown-menu>
+							</el-dropdown>
+							<span v-else @click="$selectMenu(menuItem)">
+								{{$t('menu.' + menuItem.caption)}}
+							</span>
+						</li>
 					</div>
 				</div>
 			</div>
@@ -25,7 +43,7 @@
 	export default {
 		name: 'navigator',
 		computed: {
-			selected () {
+			menu () {
 				return this.$store.state.auth.menuList
 			}
 		}
@@ -74,6 +92,10 @@
 
 					.menu-item {
 						@include menu_item_style;
+
+						.el-dropdown {
+							color: #fff;
+						}
 					}
 				}
 			}
