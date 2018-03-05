@@ -1,4 +1,5 @@
 import * as CONST from '../const'
+import store from '../../store'
 
 function $isAuthorized (key) {
     return this.$store.getters.auth[key] || false
@@ -120,10 +121,20 @@ function $compareMenu (menu, url) {
     return result
 }
 
+function $redirectToLoginPage () {
+    store.dispatch('logout')
+}
+
+function $testGlobal () {
+    alert('success')
+}
+
 export default {
     $isAuthorized,
     $loadBasicData,
     $selectMenu,
     $findMainMenu,
-    $compareMenu
+    $compareMenu,
+    $redirectToLoginPage,
+    $testGlobal
 }

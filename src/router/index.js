@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import Global from '@/config/global'
 
 Vue.use(Router)
 
@@ -33,6 +34,23 @@ const router = new Router({
     },
     { path: '/*', redirect: { name: 'login' } }
   ]
+})
+
+router.beforeEach((to, from, next) => {
+  console.log(to, from)
+  if (to.name === 'login' && from.name != null) {
+    Global.$redirectToLoginPage()
+  } else if (to.name != null && from.name == null) {
+      if (sessionStorage.loginedUser !== undefined) {
+        let loginedUser = sessionStorage.loginedUser
+        let toPath = to.path.replace('/nav', '')
+        this.$loadBasicData(loginedUser, false, toPath)
+      } else {
+        next()
+      }
+  } else {
+    next()
+  }
 })
 
 export default router

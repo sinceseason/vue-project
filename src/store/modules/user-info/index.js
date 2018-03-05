@@ -1,5 +1,6 @@
 import {
-    LOGIN
+    LOGIN,
+    LOGOUT
 } from '../../mutation_types'
 
 const USER_LOGINED_INFO = 'loginedUser'
@@ -29,11 +30,21 @@ export default {
 
             sessionStorage.setItem(USER_LOGINED_INFO, state.loginedUser)
             sessionStorage.setItem(CONFIG_HEADERS_TOKEN, state.token)
+        },
+        [LOGOUT] (state) {
+            state.logined = USER_IS_LOGINED
+            state.loginedUser = null
+            state.token = null
+
+            sessionStorage.clear()
         }
     },
     actions: {
         login ({commit}, params) {
             commit(LOGIN, params)
+        },
+        logout ({commit}) {
+            commit(LOGOUT)
         }
     }
 }
