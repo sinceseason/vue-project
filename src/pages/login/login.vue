@@ -95,6 +95,7 @@ export default {
 							reqToken: result.decodeData
 						}
 						this.$store.dispatch('login', userObj)
+						this.$store.dispatch('saveSession', dataJson)
 						this.$loadBasicData(loginedUser, true)
 					} else {
 						let errMessage = ''
