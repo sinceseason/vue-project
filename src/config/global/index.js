@@ -39,12 +39,12 @@ function $loadBasicData (loginedUser, fromLogin, toStateUrl) {
             }
             i++
         }
+        if (fromLogin) {
+            this.$selectMenu(this.$store.getters.menuList[0], true)
+        } else if (toStateUrl !== '/login') {
+            this.$findMainMenu(toStateUrl)
+        }
     })
-    if (fromLogin) {
-        this.$selectMenu(this.$store.getters.menuList[0], true)
-    } else if (toStateUrl !== '/login') {
-        this.$findMainMenu(toStateUrl)
-    }
 }
 
 function $selectMenu (menu, forceRedirect) {
@@ -96,7 +96,7 @@ function $findMainMenu (toUrl) {
     if (menuListNow && menuListNow.length > 0) {
         let m = toUrl.replace('/', '')
         menuListNow.forEach(function (item) {
-            item.selected = this.$compareMenu(item, m)
+            item.selected = $compareMenu(item, m)
         })
         this.$store.dispatch('updateMenu', menuListNow)
     }

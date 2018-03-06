@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Global from '@/config/global'
+// import Global from '@/config/global'
 
 Vue.use(Router)
 
@@ -36,10 +36,27 @@ const router = new Router({
   ]
 })
 
-router.beforeEach((to, from, next) => {
+// Vue.call(router.beforeEach, function (to, from, next) {
+//   console.log(to, from)
+//   if (to.name === 'login' && from.name != null) {
+//     this.$redirectToLoginPage()
+//   } else if (to.name != null && from.name == null) {
+//       if (sessionStorage.loginedUser !== undefined) {
+//         let loginedUser = sessionStorage.loginedUser
+//         let toPath = to.path.replace('/nav', '')
+//         this.$loadBasicData(loginedUser, false, toPath)
+//       } else {
+//         next()
+//       }
+//   } else {
+//     next()
+//   }
+// })
+
+router.beforeEach = function (to, from, next) {
   console.log(to, from)
   if (to.name === 'login' && from.name != null) {
-    Global.$redirectToLoginPage()
+    this.$redirectToLoginPage()
   } else if (to.name != null && from.name == null) {
       if (sessionStorage.loginedUser !== undefined) {
         let loginedUser = sessionStorage.loginedUser
@@ -51,7 +68,7 @@ router.beforeEach((to, from, next) => {
   } else {
     next()
   }
-})
+}
 
 export default router
 

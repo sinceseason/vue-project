@@ -6,7 +6,21 @@
 
 <script>
 export default {
-  name: 'app'
+  name: 'app',
+  watch: {
+    '$route' (to, from) {
+      console.log(to, from)
+      if (to.name === 'login' && from.name != null) {
+        this.$redirectToLoginPage()
+      } else if (to.name != null && from.name == null) {
+        if (sessionStorage.loginedUser !== undefined) {
+          let loginedUser = sessionStorage.loginedUser
+          let toPath = to.path.replace('/nav', '')
+          this.$loadBasicData(loginedUser, false, toPath)
+        }
+      }
+    }
+  }
 }
 </script>
 
