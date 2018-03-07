@@ -7,7 +7,9 @@ module.exports = {
     remember_account: '记住密码',
     login: '登录',
     join_trust: '信任站点',
-    download_center: '下载中心'
+    download_center: '下载中心',
+    default_channel: '固定频道',
+    temp_channel: '临时频道'
   },
   message: {
     failed_accout: '用户名或密码错误',

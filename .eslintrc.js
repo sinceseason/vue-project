@@ -34,6 +34,8 @@ module.exports = {
     // 文件以单一的换行符结束
     'eol-last': 'off',
     // object properties must got on a new line
-    'object-property-newline': 'off'
+    'object-property-newline': 'off',
+    //!== !=
+    'eqeqeq': 'off'
   }
 }

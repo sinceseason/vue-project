@@ -73,7 +73,7 @@ export default {
 			},
 			urls: []
     }
-  },
+	},
 	methods: {
 		login () {
 			if (this.reqUser.username === '' || this.reqUser.password === '') {
@@ -112,45 +112,6 @@ export default {
           }
 				})
 		}
-		// loadBasicData (loginedUser, fromLogin, toStateUrl) {
-		// 	let requireArr = [
-		// 		this.$httpPost(CONST.ROLE, loginedUser.roleId),
-		// 		this.$httpPost(CONST.MENU, 'client'),
-		// 		this.$httpPost(CONST.DEPARTMENT),
-		// 		this.$httpPost(CONST.ANALYSISDEVICE)
-		// 	]
-		// 	this.$httpAll(requireArr).then(data => {
-		// 		let i = 0
-		// 		for (let val of data) {
-		// 			let result = val.data
-		// 			if (result.result === CONST.RESULT.success && result.data) {
-		// 				let dataJson = this.decode(result.data)
-		// 				switch (i) {
-		// 					case 0:
-		// 						let authorizationList = JSON.parse(dataJson)
-    //           	if (authorizationList != null) {
-    //           	  this.$store.dispatch('auth', authorizationList)
-		// 						}
-		// 						break
-		// 					case 1:
-		// 						let menuList = JSON.parse(dataJson)
-		// 						this.$store.dispatch('menu', menuList)
-		// 						break
-		// 					case 2:
-		// 						let departmentList = JSON.parse(dataJson)
-		// 						this.$store.dispatch('department', departmentList)
-		// 						break
-		// 					default:
-		// 						break
-		// 				}
-		// 			}
-		// 			i++
-		// 		}
-		// 		if (fromLogin) {
-		// 			selectMenu($scope.menu[0], true)
-		// 		}
-		// 	})
-		// }
 	}
 }
 </script>

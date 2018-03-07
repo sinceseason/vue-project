@@ -108,7 +108,7 @@ function $compareMenu (menu, url) {
     let result = false
     function getSubMenu (menu) {
         if (menu.subMenu.length > 0) {
-            for (let value of menu.subMenu.values()) {
+            for (let value of menu.subMenu) {
                 if (value.main === url) {
                     result = true
                     break
