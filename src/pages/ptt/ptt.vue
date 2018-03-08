@@ -18,6 +18,7 @@
 </template>
 
 <script>
+import * as CONST from '@/config/const'
 import {Initialise} from '@/config/initialise'
 
 export default {
@@ -44,7 +45,16 @@ export default {
       }
     },
     fuzzy () {
-      console.log(this.searchCondition)
+      let jsonStr = this.encode(JSON.stringify(this.searchCondition))
+      this.$httpPost(CONST.CHANNEL, this.type, {para: jsonStr})
+        .then(data => {
+          let result = data.data
+          if (result.result === CONST.RESULT.success) {
+            let dataJson = this.decode(result.data)
+            let obj = JSON.parse(dataJson)
+            this.channelList = obj.data
+          }
+        })
     }
   }
 }
