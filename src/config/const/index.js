@@ -16,6 +16,7 @@ export const MENU = 'menu'
 export const ANALYSISDEVICE = 'analysisDevice'
 export const OCX = 'ocx'
 export const CHANNEL = 'channel'
+export const CHANNELINFOS = 'channelInfos'
 
 // result
 export const RESULT = {

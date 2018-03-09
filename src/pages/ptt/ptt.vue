@@ -12,14 +12,24 @@
           </el-input>
         </div>
       </div>
+      <channel-table 
+        :channelTableData="channelList" 
+        @enterChannel="enterChannel" 
+        @queryChannelPerson="queryChannelPerson"></channel-table>
     </div>
-    <div class="right-container"></div>
+    <div class="right-container">
+      <terminal-table
+        :terminalTableData="terminalList"></terminal-table>
+    </div>
   </div>
 </template>
 
 <script>
 import * as CONST from '@/config/const'
 import {Initialise} from '@/config/initialise'
+
+import channelTable from './table/channelTable'
+import terminalTable from './table/terminalTable'
 
 export default {
   name: 'ptt',
@@ -35,11 +45,16 @@ export default {
   created () {
     this.fuzzy()
   },
+  components: {
+    'channel-table': channelTable,
+    'terminal-table': terminalTable
+  },
   methods: {
     setConditionType (type) {
       if (this.type != type) {
         this.searchCondition.fuzzy = null
         this.type = type
+        this.terminalList = []
         // $("#channelFuzzy")[0].value = ""
         this.fuzzy()
       }
@@ -53,6 +68,20 @@ export default {
             let dataJson = this.decode(result.data)
             let obj = JSON.parse(dataJson)
             this.channelList = obj.data
+          }
+        })
+    },
+    enterChannel (channel) {
+      console.log(channel)
+    },
+    queryChannelPerson (row) {
+      this.$httpPost(CONST.CHANNELINFOS, row.channelid)
+        .then(data => {
+          let result = data.data
+          if (result.result === CONST.RESULT.success) {
+            let dataJson = this.decode(result.data)
+            let obj = JSON.parse(dataJson)
+            this.terminalList = obj
           }
         })
     }
@@ -116,16 +145,9 @@ export default {
          line-height:34px;
        }
     }
-
-    .grid_container{
-      position: absolute;
-      left: 0;
-      right: 0;
-      top: 80px;
-      bottom: 0;
-    }
   }
-  .right_container{
+
+  .right-container{
     position: absolute;
     top: 3px;
     right: 0;
