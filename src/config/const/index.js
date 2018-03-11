@@ -17,6 +17,14 @@ export const ANALYSISDEVICE = 'analysisDevice'
 export const OCX = 'ocx'
 export const CHANNEL = 'channel'
 export const CHANNELINFOS = 'channelInfos'
+export const LOAD_PTT_ADINFO = 'loadPttAdinfo'
+
+// operator
+export const operator = {
+    CREATE: 'create',
+    MODIFY: 'modify',
+    REMOVE: 'remove'
+}
 
 // result
 export const RESULT = {

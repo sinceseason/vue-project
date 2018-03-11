@@ -7,8 +7,10 @@
       </div>
       <div class="bar">
         <div class="search-bar1">
-          <el-input id="channelFuzzy" placeholder="关键字..." v-model="searchCondition.fuzzy">
-            <el-button slot="append" icon="el-icon-search" @click="fuzzy"></el-button>
+          <el-input id="channelFuzzy" :placeholder="$t('label.fuzzy')" v-model="searchCondition.fuzzy">
+            <el-button slot="append" icon="el-icon-search" @click.native="fuzzy" :title="$t('button.search')"></el-button>
+            <el-button v-if="$isAuthorized('create_temp_channel') && type == 1" 
+              slot="append" icon="el-icon-circle-plus" :title="$t('button.create')" @click="edit('create', null)"></el-button>
           </el-input>
         </div>
       </div>
@@ -21,6 +23,8 @@
       <terminal-table
         :terminalTableData="terminalList"></terminal-table>
     </div>
+    <edit-dialog :dialogVisible="dialogVisible" 
+      @doAction="doAction"></edit-dialog>
   </div>
 </template>
 
@@ -30,6 +34,7 @@ import {Initialise} from '@/config/initialise'
 
 import channelTable from './table/channelTable'
 import terminalTable from './table/terminalTable'
+import editDialog from './dialog/edit'
 
 export default {
   name: 'ptt',
@@ -39,15 +44,21 @@ export default {
       terminalList: [],
       pttAdinfoList: [],
       searchCondition: new Initialise().generateSearchCondition('', 1, 25),
-      type: 10
+      selectTerminalCondition: new Initialise().generateSearchCondition('', '', ''),
+      operateAction: new Initialise().operateAction(),
+      type: 10,
+      dialogVisible: false,
+      newChannelName: ''
     }
   },
   created () {
     this.fuzzy()
+    this.queryTerminal()
   },
   components: {
     'channel-table': channelTable,
-    'terminal-table': terminalTable
+    'terminal-table': terminalTable,
+    'edit-dialog': editDialog
   },
   methods: {
     setConditionType (type) {
@@ -82,6 +93,60 @@ export default {
             let dataJson = this.decode(result.data)
             let obj = JSON.parse(dataJson)
             this.terminalList = obj
+          }
+        })
+    },
+    edit (action, channel) {
+      switch (action) {
+        case CONST.operator.CREATE:
+          this.operateAction.action = CONST.operator.CREATE
+          this.operateAction.actionStr = this.$t('operation.temp_channel_create')
+          break
+        case CONST.operator.MODIFY:
+          this.operateAction.action = CONST.operator.MODIFY
+          this.operateAction.actionStr = this.$t('operation.temp_channel_modify')
+          break
+        case CONST.operator.REMOVE:
+          this.operateAction.action = CONST.operator.REMOVE
+          this.operateAction.actionStr = this.$t('operation.temp_channel_remove')
+          break
+        default:
+          break
+      }
+      this.dialogVisible = true
+    },
+    doAction () {
+      if (this.operateAction.action == CONST.operator.REMOVE) {
+        this.remove()
+      } else {
+        this.save()
+      }
+    },
+    save () {
+      this.operateAction.target.channelName = this.newChannelName
+      if (this.operateAction.target.channelName == null || this.operateAction.target.channelName.length == 0) {
+        this.showBasicNotify(CONST.basicFailNofity)
+        // return
+      }
+      this.dialogVisible = false
+    },
+    closeDialog (val) {
+      this.dialogVisible = val
+    },
+    queryTerminal () {
+      let jsonStr = this.encode(JSON.stringify(this.selectTerminalCondition))
+      let deptId = JSON.parse(sessionStorage.loginedUser).departmentId
+      this.$httpPost(CONST.LOAD_PTT_ADINFO, deptId, {para: jsonStr})
+        .then(data => {
+          let result = data.data
+          if (result.result === CONST.RESULT.success) {
+            let dataJson = this.decode(result.data)
+            let obj = JSON.parse(dataJson)
+            this.pttAdinfoList = []
+            obj.data.forEach(item => {
+              if (!item.channelidT)
+                this.pttAdinfoList.push(item)
+            })
           }
         })
     }

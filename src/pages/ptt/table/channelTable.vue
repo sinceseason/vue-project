@@ -1,12 +1,12 @@
 <template>
-    <el-table class="channel-table" border 
+    <el-table class="channel-table" border
         :data="channelTableData" 
         :header-row-class-name="tableHeaderClassName"
         @row-click="queryChannelPerson">
-        <el-table-column prop="channelName" label="频道名称"></el-table-column>
-        <el-table-column label="操作" width="120">
+        <el-table-column prop="channelName" :label="$t('table.channel_name')"></el-table-column>
+        <el-table-column :label="$t('label.operate')" width="120">
             <template slot-scope="scope">
-                <a><span class="fa fa-microphone" title="进入频道" @click="$emit('enterChannel', scope.row)"></span></a>
+                <a><span class="fa fa-microphone" :title="$t('button.enter_channel')" @click="$emit('enterChannel', scope.row)"></span></a>
             </template>
         </el-table-column>
     </el-table>

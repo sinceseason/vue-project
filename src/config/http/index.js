@@ -39,7 +39,7 @@ class Http {
   static _post (url, urlPara, params) {
     Http.bindHeadersToken(params)
 
-    if (urlPara)
+    if (urlPara != undefined)
       url += '/' + urlPara
 
     return new Promise((resolve, reject) => {

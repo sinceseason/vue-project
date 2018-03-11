@@ -22,13 +22,13 @@
                 <div>
                   <i class="fa fa-user"></i>
                 </div>
-                <input type="text" placeholder="用户名" v-model="reqUser.username" />
+                <input type="text" :placeholder="$t('label.user_name')" v-model="reqUser.username" />
               </div>
               <div class="login-password">
                 <div>
                   <i class="fa fa-lock"></i>
                 </div>
-                <input type="password" placeholder="密码" v-model="reqUser.password" />
+                <input type="password" :placeholder="$t('label.user_password')" v-model="reqUser.password" />
               </div>
               <div class="login-rememberpwd">
                 <input type="checkbox" v-model="cacheAccount.cached" />{{$t('label.remember_account')}}
