@@ -18,6 +18,11 @@ export const OCX = 'ocx'
 export const CHANNEL = 'channel'
 export const CHANNELINFOS = 'channelInfos'
 export const LOAD_PTT_ADINFO = 'loadPttAdinfo'
+export const TEMP_CHANNEL = 'tempChannel'
+export const TEMP_CHANNEL_RELA = 'tempChannelRela'
+export const DISPATCH_PTT_INFO = 'dispatchPttInfo'
+
+export const SAVE = 'Save'
 
 // operator
 export const operator = {
@@ -30,6 +35,14 @@ export const operator = {
 export const RESULT = {
     success: 'SUCCESS',
     failed: 'FAILED'
+}
+
+// errorcode
+export const ERRORCODE = {
+    SAME_RECORD: 0x05,
+    OUT_OF_SIZE: 0x08,
+    NO_AUTH: 0x09,
+    IS_NOT_IMAGE_FILE: 0x0A
 }
 
 // login
@@ -47,6 +60,12 @@ export const networkError = {
     duration: 2000
 }
 
+export const sameRecord = {
+    type: 'error',
+    title: '',
+    message: '存在相同记录',
+    duration: 2000
+}
 // notify
 export const basicSuccessNofity = {
     type: 'success',

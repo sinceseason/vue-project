@@ -6,27 +6,28 @@
         <el-table-column prop="channelName" :label="$t('table.channel_name')"></el-table-column>
         <el-table-column :label="$t('label.operate')" width="120">
             <template slot-scope="scope">
-                <a><span class="fa fa-microphone" :title="$t('button.enter_channel')" @click="$emit('enterChannel', scope.row)"></span></a>
+                <a class="cell-btn"><span class="fa fa-microphone" :title="$t('button.enter_channel')" @click="$emit('enterChannel', scope.row)"></span></a>
+                <a class="cell-btn"><span class="el-icon-edit-outline" :title="$t('button.modify')" @click="$emit('modifyChannel', 'modify', scope.row)"></span></a>
             </template>
         </el-table-column>
     </el-table>
 </template>
 <script>
 export default {
-  name: 'channelTable',
-  methods: {
-    tableHeaderClassName ({row, rowIndex}) {
-        return 'channel-table-header'
+    name: 'channelTable',
+    props: {
+        channelTableData: {
+            type: Array
+        }
     },
-    queryChannelPerson (row, column) {
-        this.$emit('queryChannelPerson', row)
+    methods: {
+        tableHeaderClassName ({row, rowIndex}) {
+            return 'channel-table-header'
+        },
+        queryChannelPerson (row, column) {
+            this.$emit('queryChannelPerson', row)
+        }
     }
-  },
-  props: {
-    channelTableData: {
-        type: Array
-    }
-  }
 }
 </script>
 <style lang="scss">
@@ -36,6 +37,13 @@ export default {
 .channel-table-header th {
     background-color: #1D45C9;
     color: #fff;
+}
+.cell-btn {
+    cursor: pointer;
+    margin-left: 10px;
+    &:first-child {
+        margin-left: 0px;
+    }
 }
 </style>
 

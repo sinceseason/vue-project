@@ -17,14 +17,15 @@
       <channel-table 
         :channelTableData="channelList" 
         @enterChannel="enterChannel" 
-        @queryChannelPerson="queryChannelPerson"></channel-table>
+        @queryChannelPerson="queryChannelPerson"
+        @modifyChannel="edit"></channel-table>
     </div>
     <div class="right-container">
       <terminal-table
         :terminalTableData="terminalList"></terminal-table>
     </div>
     <edit-dialog :dialogVisible="dialogVisible" 
-      @doAction="doAction"></edit-dialog>
+      @saveChannel="doAction"></edit-dialog>
   </div>
 </template>
 
@@ -47,8 +48,7 @@ export default {
       selectTerminalCondition: new Initialise().generateSearchCondition('', '', ''),
       operateAction: new Initialise().operateAction(),
       type: 10,
-      dialogVisible: false,
-      newChannelName: ''
+      dialogVisible: false
     }
   },
   created () {
@@ -97,6 +97,13 @@ export default {
         })
     },
     edit (action, channel) {
+      if (channel) {
+        this.operateAction.selected = channel
+        this.operateAction.selectedIndex = this.findIndex(this.channelList, channel, 'channelid')
+      } else {
+        delete this.operateAction.selected
+        delete this.operateAction.selectedIndex
+      }
       switch (action) {
         case CONST.operator.CREATE:
           this.operateAction.action = CONST.operator.CREATE
@@ -113,23 +120,78 @@ export default {
         default:
           break
       }
+      this.operateAction.target = channel
       this.dialogVisible = true
     },
-    doAction () {
+    doAction (newChannelName, selectedTerminalList) {
       if (this.operateAction.action == CONST.operator.REMOVE) {
         this.remove()
       } else {
-        this.save()
+        this.save(newChannelName, selectedTerminalList)
       }
     },
-    save () {
-      this.operateAction.target.channelName = this.newChannelName
+    save (newChannelName, selectedTerminalList) {
+      this.operateAction.target.channelName = newChannelName
       if (this.operateAction.target.channelName == null || this.operateAction.target.channelName.length == 0) {
         this.showBasicNotify(CONST.basicFailNofity)
         // return
       }
+      this.operateAction.target.deptid = JSON.parse(sessionStorage.loginedUser).departmentId
+      let jsonStr = this.encode(JSON.stringify(this.operateAction.target))
+      this.$httpPost(CONST.TEMP_CHANNEL + CONST.SAVE, null, {para: jsonStr})
+        .then(data => {
+          let result = data.data
+          if (result.result == CONST.RESULT.success) {
+            let dataJson = this.decode(result.data)
+            let obj = JSON.parse(dataJson)
+            switch (this.operateAction.action) {
+              case CONST.operator.CREATE:
+                this.channelList.push(obj)
+                break
+              case CONST.operator.MODIFY:
+                this.channelList[this.operateAction.selectedIndex] = obj
+                this.$httpPost(CONST.DISPATCH_PTT_INFO, obj.channelid)
+                break
+              default:
+                break
+            }
+            let list = selectedTerminalList
+            if (list.length > 0) {
+              let tList = []
+              list.forEach(item => {
+                tList.push({
+                  pid: item.pid,
+                  deptid: item.deptid
+                })
+              })
+              let jsonStr = this.encode(JSON.stringify(tList))
+              this.$httpPost(CONST.TEMP_CHANNEL_RELA + CONST.SAVE, obj.channelid, {para: jsonStr})
+                .then(data => {
+                  let result = data.data
+                  if (result.result == CONST.RESULT.success) {
+                    this.showBasicNotify(CONST.basicSuccessNofity)
+                    if (this.operateAction.action == CONST.operator.MODIFY)
+                      this.queryChannelPerson({channelid: obj.channelid})
+                  }
+                })
+            } else {
+              this.showBasicNotify(CONST.basicSuccessNofity)
+            }
+          } else {
+            let errorCode = result.errorCode
+            if (errorCode == CONST.ERRORCODE.SAME_RECORD) {
+              this.showBasicNotify({type: 'error', title: '', message: this.$t('message.same_record'), duration: 2000})
+            } else {
+              this.showBasicNotify(CONST.basicFailNofity)
+            }
+          }
+        })
       this.dialogVisible = false
     },
+    // setChannelName (channelName) {
+    //   console.log(channelName)
+    //   this.operateAction.target.channelName = channelName
+    // },
     closeDialog (val) {
       this.dialogVisible = val
     },

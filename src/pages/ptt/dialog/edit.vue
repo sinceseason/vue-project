@@ -8,18 +8,20 @@
         :data="this.$parent.pttAdinfoList"
         :max-height="500"
         :header-row-class-name="tableHeaderClassName"
-        :cell-style="registerCellStatus">
-        <el-table-column type="selection" width="35"></el-table-column>
+        :cell-style="registerCellStatus"
+        @selection-change="selectTerminal">
+        <el-table-column type="selection" width="35" :selectable="selectAbled"></el-table-column>
         <el-table-column prop="pno" :label="$t('table.pno')" width="90"></el-table-column>
         <el-table-column prop="name" :label="$t('table.pname')" width="90"></el-table-column>
         <el-table-column prop="deptName" :label="$t('table.department_name')"></el-table-column>
         <el-table-column prop="channelName" :label="$t('table.channel_name')"></el-table-column>
-        <el-table-column prop="sn" :label="$t('table.register_status')" width="90" :formatter="registerStatusFilter"></el-table-column>
-        </el-table>
+        <el-table-column prop="sn" :label="$t('table.register_status')" width="90" 
+          :formatter="registerStatusFilter"></el-table-column>
+      </el-table>
     </span>
     <span slot="footer">
       <el-button @click="$emit('closeDialog', false)">{{$t('button.cancel')}}</el-button>
-      <el-button type="primary" @click="this.$parent.doAction">{{$t('button.accept')}}</el-button>
+      <el-button type="primary" @click="doAction">{{$t('button.accept')}}</el-button>
     </span>
   </el-dialog>
 </template>
@@ -28,7 +30,8 @@ export default {
   name: 'edit-dialog',
   data () {
     return {
-      newChannelName: ''
+      newChannelName: '',
+      selectedTerminalList: []
     }
   },
   created () {
@@ -42,18 +45,33 @@ export default {
     tableHeaderClassName ({row, rowIndex}) {
       return 'select-terminal-table-header'
     },
-    registerStatusFilter (row) {
-      if (row.sn == null)
-        return this.$t('message.unregistered')
-      else
-        return this.$t('message.registered')
+    selectAbled (row) {
+      if (row.sn == undefined || row.sn == null) {
+        return false
+      }
+      return true
     },
     registerCellStatus ({row}) {
       if (row.status_t == 1)
         return {'color': '#0071c5'}
       else
         return {'color': '#000'}
+    },
+    registerStatusFilter (row) {
+      if (row.sn == null)
+        return this.$t('message.unregistered')
+      else
+        return this.$t('message.registered')
+    },
+    doAction () {
+      this.$emit('saveChannel', this.newChannelName, this.selectedTerminalList)
+    },
+    selectTerminal (val) {
+      this.selectedTerminalList = val
     }
+    // getChannelName () {
+    //   this.$emit('setChannelName', this.newChannelName)
+    // }
   }
 }
 </script>

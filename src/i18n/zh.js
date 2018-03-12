@@ -20,7 +20,8 @@ module.exports = {
     failed_accout: '用户名或密码错误',
     out_of_date: '账号已过期',
     unregistered: '未注册',
-    registered: '已注册'
+    registered: '已注册',
+    same_record: '存在相同记录'
   },
   menu: {
     monitor: '实时监控',
@@ -105,6 +106,7 @@ module.exports = {
     cancel: '取消',
     search: '查找',
     create: '新增',
+    modify: '修改',
     enter_channel: '进入频道'
   },
   table: {

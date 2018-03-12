@@ -9,6 +9,19 @@ const util = {
     Vue.prototype.decode = function (val) {
       return Base64.decode(val)
     }
+    Vue.prototype.findIndex = function (list, obj, key) {
+      if (obj == null)
+          return -1
+      if (key == null)
+          key = 'id'
+      for (let i = 0; i < list.length; i++) {
+        let entity = list[i]
+        if (obj[key] == entity[key]) {
+            return i
+        }
+      }
+      return -1
+    }
     // toaster & modal
     Vue.prototype.showBasicNotify = function (obj) {
       this.$notify({
