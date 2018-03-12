@@ -23,6 +23,7 @@ export const TEMP_CHANNEL_RELA = 'tempChannelRela'
 export const DISPATCH_PTT_INFO = 'dispatchPttInfo'
 
 export const SAVE = 'Save'
+export const REMOVE = 'Remove'
 
 // operator
 export const operator = {

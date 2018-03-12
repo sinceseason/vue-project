@@ -15,16 +15,19 @@
         </div>
       </div>
       <channel-table 
-        :channelTableData="channelList" 
-        @enterChannel="enterChannel" 
+        :channelTableData="channelList"
+        @enterChannel="enterChannel"
         @queryChannelPerson="queryChannelPerson"
-        @modifyChannel="edit"></channel-table>
+        @modifyChannel="edit"
+        @removeChannel="edit">
+      </channel-table>
     </div>
     <div class="right-container">
       <terminal-table
         :terminalTableData="terminalList"></terminal-table>
     </div>
     <edit-dialog :dialogVisible="dialogVisible" 
+      @closeDialog="closeDialog"
       @saveChannel="doAction"></edit-dialog>
   </div>
 </template>
@@ -126,15 +129,17 @@ export default {
     doAction (newChannelName, selectedTerminalList) {
       if (this.operateAction.action == CONST.operator.REMOVE) {
         this.remove()
-      } else {
+      } else if (newChannelName) {
         this.save(newChannelName, selectedTerminalList)
+      } else {
+        this.showBasicNotify(CONST.basicFailNofity)
       }
     },
     save (newChannelName, selectedTerminalList) {
       this.operateAction.target.channelName = newChannelName
       if (this.operateAction.target.channelName == null || this.operateAction.target.channelName.length == 0) {
         this.showBasicNotify(CONST.basicFailNofity)
-        // return
+        return
       }
       this.operateAction.target.deptid = JSON.parse(sessionStorage.loginedUser).departmentId
       let jsonStr = this.encode(JSON.stringify(this.operateAction.target))
@@ -185,6 +190,18 @@ export default {
               this.showBasicNotify(CONST.basicFailNofity)
             }
           }
+        })
+      this.dialogVisible = false
+    },
+    remove () {
+      this.$httpPost(CONST.TEMP_CHANNEL + CONST.REMOVE, this.operateAction.target.channelid)
+        .then(data => {
+          let result = data.data
+            if (result.result == CONST.RESULT.success) {
+              this.fuzzy()
+              this.terminalList = []
+              this.showBasicNotify(CONST.basicSuccessNofity)
+            }
         })
       this.dialogVisible = false
     },

@@ -1,6 +1,6 @@
 <template>
   <el-dialog :title="this.$parent.operateAction.actionStr" :visible="this.$parent.dialogVisible">
-    <span>
+    <span v-if="this.$parent.operateAction.action != 'remove'">
       <el-input :placeholder="$t('table.channel_name')" v-model.trim="newChannelName">
         <el-button slot="prepend">{{$t('table.channel_name')}}</el-button>
       </el-input>
@@ -18,6 +18,9 @@
         <el-table-column prop="sn" :label="$t('table.register_status')" width="90" 
           :formatter="registerStatusFilter"></el-table-column>
       </el-table>
+    </span>
+    <span v-else>
+      {{$t('message.remove_info')}}
     </span>
     <span slot="footer">
       <el-button @click="$emit('closeDialog', false)">{{$t('button.cancel')}}</el-button>

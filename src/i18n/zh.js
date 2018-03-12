@@ -21,7 +21,8 @@ module.exports = {
     out_of_date: '账号已过期',
     unregistered: '未注册',
     registered: '已注册',
-    same_record: '存在相同记录'
+    same_record: '存在相同记录',
+    remove_info: '请确认是否删除该条数据'
   },
   menu: {
     monitor: '实时监控',
