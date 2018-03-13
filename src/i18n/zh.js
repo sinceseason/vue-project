@@ -14,7 +14,8 @@ module.exports = {
     online: '在线',
     breakdown: '故障',
     fuzzy: '关键字...',
-    operate: '操作'
+    operate: '操作',
+    remove_chennel_member: '移除频道成员'
   },
   message: {
     failed_accout: '用户名或密码错误',

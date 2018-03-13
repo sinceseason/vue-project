@@ -1,7 +1,11 @@
 <template>
-  <el-dialog :title="this.$parent.operateAction.actionStr" :visible="this.$parent.dialogVisible">
+  <el-dialog 
+    :title="this.$parent.operateAction.actionStr" 
+    :visible="this.$parent.dialogVisible"
+    @open="this.$parent.beforeOpenEditDialog"
+    @close="closeDialog">
     <span v-if="this.$parent.operateAction.action != 'remove'">
-      <el-input :placeholder="$t('table.channel_name')" v-model.trim="newChannelName">
+      <el-input :placeholder="$t('table.channel_name')" v-model.trim="this.$parent.testChannelName">
         <el-button slot="prepend">{{$t('table.channel_name')}}</el-button>
       </el-input>
       <el-table class="select-terminal-table" border
@@ -37,8 +41,6 @@ export default {
       selectedTerminalList: []
     }
   },
-  created () {
-  },
   props: {
     dialogVisible: {
 			type: Boolean
@@ -71,10 +73,10 @@ export default {
     },
     selectTerminal (val) {
       this.selectedTerminalList = val
+    },
+    closeDialog () {
+      this.newChannelName = ''
     }
-    // getChannelName () {
-    //   this.$emit('setChannelName', this.newChannelName)
-    // }
   }
 }
 </script>

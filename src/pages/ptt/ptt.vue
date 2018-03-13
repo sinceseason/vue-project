@@ -24,11 +24,14 @@
     </div>
     <div class="right-container">
       <terminal-table
-        :terminalTableData="terminalList"></terminal-table>
+        :terminalTableData="terminalList"
+        @removeChannelItem="removeChannelItem"></terminal-table>
     </div>
-    <edit-dialog :dialogVisible="dialogVisible" 
+    <edit-dialog 
       @closeDialog="closeDialog"
       @saveChannel="doAction"></edit-dialog>
+    <remove-terminal-dialog
+      @closeDialog="closeDialog"></remove-terminal-dialog>
   </div>
 </template>
 
@@ -39,6 +42,7 @@ import {Initialise} from '@/config/initialise'
 import channelTable from './table/channelTable'
 import terminalTable from './table/terminalTable'
 import editDialog from './dialog/edit'
+import removeChannelDialog from './dialog/removeChannelTerminal'
 
 export default {
   name: 'ptt',
@@ -51,7 +55,8 @@ export default {
       selectTerminalCondition: new Initialise().generateSearchCondition('', '', ''),
       operateAction: new Initialise().operateAction(),
       type: 10,
-      dialogVisible: false
+      dialogVisible: false,
+      removeDialogVisible: false
     }
   },
   created () {
@@ -61,7 +66,8 @@ export default {
   components: {
     'channel-table': channelTable,
     'terminal-table': terminalTable,
-    'edit-dialog': editDialog
+    'edit-dialog': editDialog,
+    'remove-terminal-dialog': removeChannelDialog
   },
   methods: {
     setConditionType (type) {
@@ -123,7 +129,7 @@ export default {
         default:
           break
       }
-      this.operateAction.target = channel
+      this.operateAction.target = channel || {}
       this.dialogVisible = true
     },
     doAction (newChannelName, selectedTerminalList) {
@@ -205,12 +211,33 @@ export default {
         })
       this.dialogVisible = false
     },
-    // setChannelName (channelName) {
-    //   console.log(channelName)
-    //   this.operateAction.target.channelName = channelName
-    // },
+    removeChannelItem (row) {
+      this.selectedTerminalList = [{
+        pid: row.pid,
+        deptid: row.deptid,
+        channelidT: row.channelidT
+      }]
+      this.removeDialogVisible = true
+    },
+    removeChannelTerminal () {
+      let jsonStr = this.encode(JSON.stringify(this.selectedTerminalList))
+      this.$httpPost(CONST.TEMPCHANNELRELAREMOVE, this.selectedTerminalList[0].channelidT, {para: jsonStr})
+        .then(data => {
+          let result = data.data
+          if (result.result == CONST.RESULT.success) {
+            this.showBasicNotify(CONST.basicSuccessNofity)
+            this.queryChannelPerson({channelid: this.selectedTerminalList[0].channelidT})
+          }
+        })
+      this.removeDialogVisible = false
+    },
+    beforeOpenEditDialog () {
+      this.selectTerminalCondition = new Initialise().generateSearchCondition('', '', '')
+      this.queryTerminal()
+    },
     closeDialog (val) {
       this.dialogVisible = val
+      this.removeDialogVisible = val
     },
     queryTerminal () {
       let jsonStr = this.encode(JSON.stringify(this.selectTerminalCondition))
@@ -262,7 +289,6 @@ export default {
         text-align: center;
         color: #0071c5;
         cursor: pointer;
-
         &:first-child{
           border: 1px solid #0d0408;
         }
@@ -270,7 +296,6 @@ export default {
           border: 1px solid #0d0408;
           border-left: none;
         }
-
         &.active{
           background-color: #0071c5;
           color: #fff;
@@ -283,6 +308,7 @@ export default {
         line-height:34px;
         margin-left: 10px;
       }
+
       .search-bar1{
          width: 100%;
          height: 34px;

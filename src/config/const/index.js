@@ -20,6 +20,7 @@ export const CHANNELINFOS = 'channelInfos'
 export const LOAD_PTT_ADINFO = 'loadPttAdinfo'
 export const TEMP_CHANNEL = 'tempChannel'
 export const TEMP_CHANNEL_RELA = 'tempChannelRela'
+export const TEMPCHANNELRELAREMOVE = 'tempChannelRelaRemove'
 export const DISPATCH_PTT_INFO = 'dispatchPttInfo'
 
 export const SAVE = 'Save'
