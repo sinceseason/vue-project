@@ -71,6 +71,23 @@ $btn_bgcolor5: #20c695;
 $btn_bgcolor6: #a4a4a4;
 $btn_color: #ffffff;
 
+$system_font_family_1: "Microsoft YaHei";//微软雅黑
+$system_font_family_2: "SimHei";//黑体
+$system_hover_background_color: #00A1CB;
+$system_title_border_color: #0071c5;
+$system_title_color: #0071c5;
+$iconBtnColor: #1190b8;
+
+$organization_color: #ffffff;
+$organization_border_color: #cfcfcf;
+$organization_button_color1: #5c9bd1;
+$organization_button_color2: #f36a5b;
+$organization_input_border_color: #e5e5e5;
+$organization_background_color: #eeeeee;
+$organization_tips_border_color: #0071c5;
+$organization_tips_label_color: #0071c5;
+$organization_tr_even_color: #f3f3f3;
+
 //method
 @mixin site_name_style{
   color: #fff;

@@ -1,5 +1,5 @@
 <template>
-  <div class="loginComponent">
+  <div class="loginComponent" tabindex="0" @keydown.enter="login">
     <div class="bg">
       <div class="top-content">
         <div class="line"></div>
@@ -110,6 +110,9 @@ export default {
 							duraction: 2000
             })
           }
+				}).catch(error => {
+					if (error)
+						this.showBasicNotify(CONST.networkError)
 				})
 		}
 	}

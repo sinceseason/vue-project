@@ -13,6 +13,7 @@ const Police = () => import('@/pages/remote/police/police')
 const Upgrade = () => import('@/pages/remote/upgrade/upgrade')
 const Analysis = () => import('@/pages/analysis/analysis')
 const VehicleState = () => import('@/pages/analysis/vehicle_state/vehicle_state')
+const Log = () => import('@/pages/system/log/log')
 
 const router = new Router({
   mode: 'history',
@@ -29,7 +30,8 @@ const router = new Router({
           children: [
             { path: 'state', name: 'state', component: VehicleState }
           ]
-        }
+        },
+        { path: 'log', name: 'log', component: Log }
       ]
     },
     { path: '/*', redirect: { name: 'login' } }

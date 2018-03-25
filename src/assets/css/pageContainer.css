@@ -1,0 +1,105 @@
+.normal-layout {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  bottom: 20px;
+  left: 20px; }
+  .normal-layout .search-bar {
+    height: 40px; }
+    .normal-layout .search-bar .btn-bar {
+      float: left;
+      padding-right: 10px; }
+    .normal-layout .search-bar .col-25, .normal-layout .search-bar .col-15, .normal-layout .search-bar .col-10 {
+      float: left;
+      padding-right: 10px; }
+      .normal-layout .search-bar .col-25 div:first-child, .normal-layout .search-bar .col-25 input:first-child, .normal-layout .search-bar .col-15 div:first-child, .normal-layout .search-bar .col-15 input:first-child, .normal-layout .search-bar .col-10 div:first-child, .normal-layout .search-bar .col-10 input:first-child {
+        width: 100%; }
+      .normal-layout .search-bar .col-25 button, .normal-layout .search-bar .col-15 button, .normal-layout .search-bar .col-10 button {
+        width: 100%; }
+        .normal-layout .search-bar .col-25 button .caret, .normal-layout .search-bar .col-15 button .caret, .normal-layout .search-bar .col-10 button .caret {
+          float: right;
+          margin-top: 8px; }
+      .normal-layout .search-bar .col-25 .title, .normal-layout .search-bar .col-15 .title, .normal-layout .search-bar .col-10 .title {
+        height: 34px;
+        line-height: 31px;
+        text-align: center;
+        color: #0071c5;
+        border: 1px solid #0071c5; }
+    .normal-layout .search-bar .col-25 {
+      width: 25%; }
+    .normal-layout .search-bar .col-15 {
+      width: 15%; }
+    .normal-layout .search-bar .col-10 {
+      width: 10%; }
+  .normal-layout .table_content {
+    position: absolute;
+    top: 45px;
+    bottom: 0;
+    left: 0;
+    right: 0; }
+    .normal-layout .table_content .remark {
+      width: 100px;
+      height: 25px; }
+
+.business_layout {
+  width: 100%;
+  height: 100%;
+  padding: 10px; }
+  .business_layout .left, .business_layout .right {
+    height: 100%; }
+  .business_layout .left {
+    float: left;
+    width: 300px; }
+    .business_layout .left .department_tree {
+      height: 100%;
+      border: 1px solid #cfcfcf;
+      border-radius: 4px;
+      padding: 5px;
+      overflow-y: auto; }
+  .business_layout .right {
+    width: 100%;
+    padding-left: 305px;
+    height: 100%; }
+    .business_layout .right .organization_content {
+      border: 1px solid #cfcfcf;
+      height: 100%;
+      border-radius: 4px;
+      padding: 5px; }
+      .business_layout .right .organization_content .search_bar {
+        height: 40px;
+        margin-top: 5px;
+        margin-left: -15px;
+        margin-right: -15px; }
+      .business_layout .right .organization_content .table_content {
+        position: absolute;
+        top: 50px;
+        bottom: 0px;
+        left: 305px;
+        right: 0px;
+        padding: 20px 35px 30px 35px; }
+
+.department_condition_tree {
+  width: 284px;
+  height: 300px;
+  overflow: auto; }
+
+.grid_style {
+  width: 100%;
+  height: 100%; }
+  .grid_style .recordIndexCellTemplate {
+    height: 30px;
+    line-height: 30px;
+    text-align: center; }
+  .grid_style .customerCellTemplate {
+    height: 30px;
+    line-height: 30px;
+    padding-left: 5px; }
+    .grid_style .customerCellTemplate .cellBtn {
+      margin-left: 10px; }
+      .grid_style .customerCellTemplate .cellBtn:first-child {
+        margin-left: 0px; }
+    .grid_style .customerCellTemplate .remark {
+      margin-bottom: 4px;
+      width: 180px; }
+    .grid_style .customerCellTemplate .label {
+      float: left; }

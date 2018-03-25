@@ -13,10 +13,14 @@ import store from './store'
 
 import global from './config/global'
 
+// 引入库css文件
 import '../node_modules/element-ui/lib/theme-chalk/index.css'
 // import '../node_modules/bootstrap/dist/js/bootstrap.min.js'
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import '../static/font-awesome/css/font-awesome.min.css'
+
+// 引入自定义css文件
+import './assets/css/pageContainer.css'
 
 Vue.config.productionTip = false
 
