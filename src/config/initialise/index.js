@@ -3,12 +3,17 @@ class Initialise {
         this.target = {}
     }
 
-    generateSearchCondition (fuzzy, page, pageSize) {
-        return {fuzzy, page, pageSize}
+    generateSearchCondition (fuzzy, page, limit) {
+        return {fuzzy, page, limit}
     }
 
     operateAction (action, actionStr, target = {}, selected, selectedIndex) {
         return {action, actionStr, target, selected, selectedIndex}
+    }
+
+    static buildDepartment (departmentList) {
+        console.log(departmentList)
+        return departmentList
     }
 }
 

@@ -249,10 +249,12 @@ export default {
             let dataJson = this.decode(result.data)
             let obj = JSON.parse(dataJson)
             this.pttAdinfoList = []
-            obj.data.forEach(item => {
-              if (!item.channelidT)
-                this.pttAdinfoList.push(item)
-            })
+            if (obj.totalCount != 0) {
+              obj.data.forEach(item => {
+                if (!item.channelidT)
+                  this.pttAdinfoList.push(item)
+              })
+            }
           }
         })
     }

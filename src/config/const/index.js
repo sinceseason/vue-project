@@ -10,6 +10,7 @@ export const SUBSCRIBE_URL = 'ws://' + apiIp + ':61614'
 
 // httpUrl
 export const LOGIN = 'login'
+export const LOGOUT = 'logout'
 export const ROLE = 'role'
 export const DEPARTMENT = 'department'
 export const MENU = 'menu'
@@ -22,9 +23,11 @@ export const TEMP_CHANNEL = 'tempChannel'
 export const TEMP_CHANNEL_RELA = 'tempChannelRela'
 export const TEMPCHANNELRELAREMOVE = 'tempChannelRelaRemove'
 export const DISPATCH_PTT_INFO = 'dispatchPttInfo'
+export const LOG = 'log'
 
 export const SAVE = 'Save'
 export const REMOVE = 'Remove'
+export const FUZZY = 'Fuzzy'
 
 // operator
 export const operator = {

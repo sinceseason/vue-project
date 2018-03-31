@@ -2,6 +2,7 @@
     <el-table class="channel-table" border
         :data="channelTableData" 
         :header-row-class-name="tableHeaderClassName"
+        :row-class-name="tableRowClassName"
         @row-click="queryChannelPerson">
         <el-table-column prop="channelName" :label="$t('table.channel_name')"></el-table-column>
         <el-table-column :label="$t('label.operate')" width="120">
@@ -20,6 +21,11 @@
 <script>
 export default {
     name: 'channelTable',
+    data () {
+        return {
+            highlightId: -1
+        }
+    },
     props: {
         channelTableData: {
             type: Array
@@ -29,7 +35,12 @@ export default {
         tableHeaderClassName ({row, rowIndex}) {
             return 'channel-table-header'
         },
+        tableRowClassName ({row, rowIndex}) {
+            if (this.highlightId == row.id)
+                return 'highlight'
+        },
         queryChannelPerson (row, column) {
+            this.highlightId = row.id
             this.$emit('queryChannelPerson', row)
         }
     }
@@ -42,6 +53,9 @@ export default {
 .channel-table-header th {
     background-color: #1D45C9;
     color: #fff;
+}
+.el-table .highlight {
+    background-color: #97e399
 }
 .cell-btn {
     cursor: pointer;

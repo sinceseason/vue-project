@@ -30,6 +30,21 @@
 							</span>
 						</li>
 					</div>
+					<div class="login-info">
+						<div class="info-item">
+							<div class="user-info">
+								<el-dropdown trigger="click">
+									<span class="el-dropdown-link">
+        						{{ nickname }}<i class="el-icon-arrow-down el-icon--right"></i>
+      						</span>
+									<el-dropdown-menu slot="dropdown">
+										<el-dropdown-item>{{ $t('log.change_password') }}</el-dropdown-item>
+										<el-dropdown-item @click.native="logout">{{ $t('label.logout') }}</el-dropdown-item>
+									</el-dropdown-menu>
+								</el-dropdown>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -40,21 +55,41 @@
 </template>
 
 <script>
-	export default {
-		name: 'navigator',
-		computed: {
-			menu () {
-				return this.$store.state.auth.menuList
+import * as CONST from '@/config/const'
+
+export default {
+	name: 'navigator',
+	computed: {
+		menu () {
+			return this.$store.state.auth.menuList
+		},
+		nickname () {
+			let user = this.$store.state.userInfo.loginedUser
+			if (typeof user == 'object')
+				return user.nickname
+			if (typeof user == 'string') {
+				user = JSON.parse(user)
+				return user.nickname
 			}
 		}
+	},
+	methods: {
+		logout () {
+			this.$httpPost(CONST.LOGOUT)
+				.then(data => {
+					this.$store.dispatch('logout')
+					this.$router.push({name: 'login'})
+				})
+		}
 	}
+}
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import '../assets/scss/definition.scss';
 
 .layout {
-  width: 100%;
+	width: 100%;
 	height: 100%;
 	
 	.header {
@@ -74,12 +109,12 @@
 			background-color: $header_background_color;
 
 			.info {
-      	width: 100%;
-      	height: 60px;
+      			width: 100%;
+      			height: 60px;
 
-      	.title {
-        	@include site_name_style;
-      	}
+      			.title {
+        			@include site_name_style;
+      			}
 			}
 
 			.menu {
@@ -95,6 +130,33 @@
 
 						.el-dropdown {
 							color: #fff;
+						}
+					}
+				}
+
+				.login-info {
+        			float: right;
+        			height: 100%;
+					margin-right: 10px;
+					user-select: none;
+
+        			.info-item {
+        				font-family: $system_font_family_2;
+        				font-size: 14px;
+        				line-height: 36px;
+        				height: 100%;
+        				color: #fff;
+        				float: left;
+        				cursor: pointer;
+
+						.user-info {
+            				float: left;
+            				margin-right: 10px;
+            				position: relative;
+            				cursor: pointer;
+            				.el-dropdown {
+            				  color: #fff !important;
+            				}
 						}
 					}
 				}

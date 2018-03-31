@@ -14,6 +14,7 @@ const Upgrade = () => import('@/pages/remote/upgrade/upgrade')
 const Analysis = () => import('@/pages/analysis/analysis')
 const VehicleState = () => import('@/pages/analysis/vehicle_state/vehicle_state')
 const Log = () => import('@/pages/system/log/log')
+const Department = () => import('@/pages/system/department/department')
 
 const router = new Router({
   mode: 'history',
@@ -31,7 +32,8 @@ const router = new Router({
             { path: 'state', name: 'state', component: VehicleState }
           ]
         },
-        { path: 'log', name: 'log', component: Log }
+        { path: 'log', name: 'log', component: Log },
+        { path: 'department', name: 'department', component: Department }
       ]
     },
     { path: '/*', redirect: { name: 'login' } }

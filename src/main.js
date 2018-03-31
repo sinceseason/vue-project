@@ -5,6 +5,7 @@ import App from './App'
 import router from './router'
 import VueI18n from 'vue-i18n'
 import ElementUI from 'element-ui'
+import vueBeauty from 'vue-beauty'
 
 import Util from './config/util'
 import * as Filters from './config/filters'
@@ -18,6 +19,7 @@ import '../node_modules/element-ui/lib/theme-chalk/index.css'
 // import '../node_modules/bootstrap/dist/js/bootstrap.min.js'
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import '../static/font-awesome/css/font-awesome.min.css'
+import '../node_modules/vue-beauty/package/style/vue-beauty.min.css'
 
 // 引入自定义css文件
 import './assets/css/pageContainer.css'
@@ -25,6 +27,7 @@ import './assets/css/pageContainer.css'
 Vue.config.productionTip = false
 
 Vue.use(ElementUI)
+Vue.use(vueBeauty)
 Vue.use(Util)
 Vue.use(Http)
 
