@@ -1,0 +1,6 @@
+[submodule "vue-cli-ssr-example\\"]
+	path = vue-cli-ssr-example\\
+	url = https://github.com/lentoo/vue-cli-ssr-example.git
+[submodule "vue-meta-info-example\\"]
+	path = vue-meta-info-example\\
+	url = https://github.com/muwoo/vue-meta-info.git
