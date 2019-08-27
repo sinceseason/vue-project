@@ -4,3 +4,6 @@
 [submodule "vue-meta-info-example\\"]
 	path = vue-meta-info-example\\
 	url = https://github.com/muwoo/vue-meta-info.git
+[submodule "vue-cli3-ssr-project\\"]
+	path = vue-cli3-ssr-project\\
+	url = git@github.com:sinceseason/vue-project.git
