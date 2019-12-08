@@ -12,7 +12,6 @@ class Initialise {
     }
 
     static buildDepartment (departmentList) {
-        console.log(departmentList)
         return departmentList
     }
 }
