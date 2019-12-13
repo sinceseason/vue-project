@@ -11,7 +11,7 @@
     "lint": "eslint --ext .js,.vue src"
   },
   "dependencies": {
-    "npm": "^6.11.2",
+    "npm": "^6.13.4",
     "vue": "^2.6.10",
     "vue-i18n": "^8.14.0",
     "vue-router": "^3.1.2"
